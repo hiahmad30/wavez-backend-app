@@ -1,0 +1,49 @@
+name: Docker build and publish
+
+on:
+  release:
+    types: [ created ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Installing Dependencies
+        run: npm install
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.WAVEZ_DOCKER_USERNAME }}
+          password: ${{ secrets.WAVEZ_DOCKER_TOKEN }}
+
+      - name: Build and Push
+        if: contains(github.ref, 'alpha')
+        uses: docker/build-push-action@v2
+        with:
+          no-cache: true
+          push: true
+          tags: wimtach2020/wavez-backend:develop
+
+      - name: Build and Push (uat)
+        if: contains(github.ref, 'beta')
+        uses: docker/build-push-action@v2
+        with:
+          no-cache: true
+          push: true
+          tags: wimtach2020/wavez-backend:uat
+
+      - name: Build and Push
+        if: contains(github.ref, 'prod')
+        uses: docker/build-push-action@v2
+        with:
+          no-cache: true
+          push: true
+          tags: wimtach2020/wavez-backend:production
