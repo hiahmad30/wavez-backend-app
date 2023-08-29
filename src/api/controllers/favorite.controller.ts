@@ -5,7 +5,7 @@ import VesselCategoryModel from '../models/vessel-category.model';
 import VesselFeatureModel from '../models/vessel-feature.model';
 import UserModel from '../models/user.model';
 
-export default class FavoriteController extends BaseController { 
+export default class FavoriteController extends BaseController {
     private static _JWT_SECRET: string;
     private static _JWT_EXPIRES_IN: string;
     private _favouriteModel = FavouriteModel.getInstance().getModel();
