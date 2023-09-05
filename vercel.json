@@ -5,12 +5,7 @@
         "use":"@vercel/node-ts"
     
     }
-    ],
-    "routes":[
-        {
-        "src":"src/api/(.*)",
-        "dest":"src/server.ts"
-    }
-]
+    ]
+   
 
 }
